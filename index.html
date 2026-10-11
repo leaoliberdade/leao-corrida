@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#07111f">
+<title>LEÃO DA LIBERDADE — Corrida Interativa</title>
+<style>
+:root{--bg:#07111f;--panel:#101e32;--yellow:#ffe34d;--green:#21d47b;--red:#ff4b55;--muted:#a8b8ce}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(#07111f,#142943);color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+.wrap{max-width:520px;margin:auto;padding:12px}header{text-align:center;padding:12px 6px 8px}.brand{font-size:12px;letter-spacing:2px;color:var(--yellow);font-weight:900}h1{font-size:clamp(22px,6vw,32px);line-height:1.05;margin:6px 0}.sub{font-size:12px;color:var(--muted)}
+.panel{background:rgba(16,30,50,.96);border:2px solid #284666;border-radius:14px;padding:12px;margin:10px 0;box-shadow:0 8px 22px #0005}.status{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:800}.timer{font-variant-numeric:tabular-nums;background:#050a12;border:2px solid var(--yellow);color:var(--yellow);border-radius:8px;padding:6px 10px;font-size:22px}
+.track{position:relative;height:260px;overflow:hidden;border-radius:12px;border:3px solid #54708d;background:repeating-linear-gradient(0deg,#b85f36 0 28px,#d17a45 28px 31px);margin:10px 0}.track:before,.track:after{content:"";position:absolute;left:0;right:0;height:8px;background:#f2f2e8}.track:before{top:0}.track:after{bottom:0}.lane{position:absolute;left:0;right:0;height:50%;border-bottom:3px dashed #f6e9c8aa}.lane.one{top:0}.lane.two{top:50%;border-bottom:0}.finish{position:absolute;top:0;bottom:0;right:30px;width:10px;background:repeating-conic-gradient(#fff 0% 25%,#111 0% 50%) 0/14px 14px;opacity:.9}
+.runner{position:absolute;left:8px;display:flex;align-items:center;gap:7px;transition:left .25s ease;z-index:2;max-width:75%;pointer-events:none}.runner.r13{top:36px}.runner.r22{top:166px}.avatar{font-size:31px;background:#fff;border-radius:10px;padding:4px;box-shadow:0 3px 0 #0005}.tag{font-weight:1000;border:2px solid #fff;border-radius:8px;padding:5px 8px;font-size:13px;white-space:nowrap;text-shadow:1px 1px #000}.r13 .tag{background:#b92332}.r22 .tag{background:#087d49}
+.winner{display:none;text-align:center;color:var(--yellow);font-size:23px;font-weight:1000;padding:8px}.score{display:grid;grid-template-columns:1fr 1fr;gap:8px}.score div{border-radius:10px;padding:9px;text-align:center;background:#07111f;border:1px solid #35516e}.score strong{display:block;font-size:24px}.red{color:#ff6971}.green{color:#4ff0a0}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}button{position:relative;z-index:10;display:block;width:100%;font:inherit;font-weight:900;border:0;border-radius:11px;padding:15px 10px;color:#06101d;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}.b13{background:var(--red)}.b22{background:var(--green)}.secondary{background:#223b58;color:white;border:1px solid #476382}.small{font-size:12px;color:var(--muted);line-height:1.45}.log{height:90px;overflow:auto;background:#07111f;border-radius:8px;padding:8px;font-size:12px;color:#c9d9ed}.log div{padding:2px 0;border-bottom:1px solid #17283d}footer{text-align:center;color:#7890ab;font-size:11px;padding:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">LEÃO DA LIBERDADE APRESENTA</div><h1>🏁 CORRIDA PRESIDENCIAL</h1><div class="sub">PROTÓTIPO INTERATIVO • VERSÃO DE TESTE</div></header>
+<div class="panel">
+<div class="status"><span>🏟️ CORRIDA AO VIVO</span><span class="timer" id="timer">00:30</span></div>
+<div class="track" id="track"><div class="lane one"></div><div class="lane two"></div><div class="finish"></div><div class="runner r13" id="runner13"><span class="avatar">🏃🏻‍♂️</span><span class="tag">13 • LULA</span></div><div class="runner r22" id="runner22"><span class="avatar">🏃🏻‍♂️</span><span class="tag">22 • FLÁVIO</span></div></div>
+<div class="winner" id="winner"></div>
+<div class="score"><div><span class="red">13 • LULA</span><strong id="score13">0</strong><small>impulsos</small></div><div><span class="green">22 • FLÁVIO</span><strong id="score22">0</strong><small>impulsos</small></div></div>
+</div>
+<div class="panel"><div style="font-weight:900;margin-bottom:8px">🗣️ TESTE OS COMANDOS DO CHAT</div><div class="buttons"><button type="button" class="b13" id="btn13">DIGITE 13 PARA CORRER</button><button type="button" class="b22" id="btn22">DIGITE 22 PARA CORRER</button></div><div style="height:8px"></div><button type="button" class="secondary" id="reset">↻ NOVA CORRIDA</button><p class="small">Toque nos botões para simular comentários. Esta versão ainda não está conectada ao chat real do TikTok.</p></div>
+<div class="panel"><div style="font-weight:900;margin-bottom:7px">📣 ÚLTIMAS INTERAÇÕES</div><div class="log" id="log"><div>Jogo carregado. Toque em 13 ou 22 para testar.</div></div></div>
+<div class="panel small"><strong style="color:#fff">Próxima etapa:</strong> publicar o jogo numa página web e conectar um serviço que leia os comentários da LIVE. Esta página sozinha não acessa o chat do TikTok.</div>
+<footer>LEÃO DA LIBERDADE • Protótipo independente para testes</footer>
+</div>
+<script>
+(function(){
+let p13=0,p22=0,time=30,finished=false,timerId=null;
+const $=id=>document.getElementById(id);
+function log(msg){const el=$('log');const row=document.createElement('div');row.textContent=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' — '+msg;el.insertBefore(row,el.firstChild);while(el.children.length>12)el.removeChild(el.lastChild);}
+function render(){const max=Math.max(20,$('track').clientWidth-140);$('runner13').style.left=Math.min(8+p13*2,max)+'px';$('runner22').style.left=Math.min(8+p22*2,max)+'px';$('score13').textContent=p13;$('score22').textContent=p22;}
+function finish(winner){finished=true;clearInterval(timerId);$('winner').style.display='block';$('winner').textContent='🏆 '+winner+' VENCEU!';log('Fim da corrida: '+winner+'.');}
+function command(n){if(finished){resetRace();}if(n==='13')p13+=1;else p22+=1;render();log('Comando '+n+' recebido no teste.');const max=Math.max(20,$('track').clientWidth-140);if(p13*2>=max||p22*2>=max){finish(p13>p22?'13 • LULA':p22>p13?'22 • FLÁVIO':'EMPATE');}}
+function resetRace(){clearInterval(timerId);p13=0;p22=0;time=30;finished=false;$('winner').style.display='none';$('winner').textContent='';$('timer').textContent='00:30';render();timerId=setInterval(function(){if(finished)return;time--;if(time<=0){$('timer').textContent='00:00';finish(p13>p22?'13 • LULA':p22>p13?'22 • FLÁVIO':'EMPATE');return;}$('timer').textContent='00:'+String(time).padStart(2,'0');},1000);log('Nova corrida iniciada.');}
+$('btn13').addEventListener('click',function(e){e.preventDefault();command('13');});
+$('btn22').addEventListener('click',function(e){e.preventDefault();command('22');});
+$('reset').addEventListener('click',function(e){e.preventDefault();resetRace();});
+window.addEventListener('resize',render);
+resetRace();
+})();
+</script>
+</body></html>
