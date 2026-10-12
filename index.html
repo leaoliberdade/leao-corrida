@@ -25,7 +25,8 @@
 <div class="winner" id="winner"></div>
 <div class="score"><div><span class="red">13 • LULA</span><strong id="score13">0</strong><small>impulsos</small></div><div><span class="green">22 • FLÁVIO</span><strong id="score22">0</strong><small>impulsos</small></div></div>
 </div>
-<div class="panel"><div style="font-weight:900;margin-bottom:8px">🗣️ TESTE OS COMANDOS DO CHAT</div><div class="buttons"><button type="button" class="b13" id="btn13">DIGITE 13 PARA CORRER</button><button type="button" class="b22" id="btn22">DIGITE 22 PARA CORRER</button></div><div style="height:8px"></div><button type="button" class="secondary" id="reset">↻ NOVA CORRIDA</button><p class="small">Toque nos botões para simular comentários. Esta versão ainda não está conectada ao chat real do TikTok.</p></div>
+<div class="panel"><div style="font-weight:900;margin-bottom:6px">🔌 CONEXÃO COM A PONTE</div><div id="bridgeStatus" class="small">Aguardando conexão com o Termux…</div></div>
+<div class="panel"><div style="font-weight:900;margin-bottom:8px">🗣️ TESTE OS COMANDOS DO CHAT</div><div class="buttons"><button type="button" class="b13" id="btn13">DIGITE 13 PARA CORRER</button><button type="button" class="b22" id="btn22">DIGITE 22 PARA CORRER</button></div><div style="height:8px"></div><button type="button" class="secondary" id="reset">↻ NOVA CORRIDA</button><p class="small">Toque nos botões para simular comentários. Os botões simulam comentários. A conexão com o chat real do TikTok depende do leitor estar conectado à LIVE.</p></div>
 <div class="panel"><div style="font-weight:900;margin-bottom:7px">📣 ÚLTIMAS INTERAÇÕES</div><div class="log" id="log"><div>Jogo carregado. Toque em 13 ou 22 para testar.</div></div></div>
 <div class="panel small"><strong style="color:#fff">Próxima etapa:</strong> publicar o jogo numa página web e conectar um serviço que leia os comentários da LIVE. Esta página sozinha não acessa o chat do TikTok.</div>
 <footer>LEÃO DA LIBERDADE • Protótipo independente para testes</footer>
@@ -44,6 +45,30 @@ $('btn22').addEventListener('click',function(e){e.preventDefault();command('22')
 $('reset').addEventListener('click',function(e){e.preventDefault();resetRace();});
 window.addEventListener('resize',render);
 resetRace();
+// Lê a contagem da ponte local no Termux. A primeira leitura vira referência,
+// para não reproduzir comandos antigos; só movimentos novos são aplicados.
+let bridgeReady=false,old13=0,old22=0;
+async function pollBridge(){
+  const status=$('bridgeStatus');
+  try{
+    const response=await fetch('http://127.0.0.1:8765/',{cache:'no-store'});
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    const data=await response.json();
+    const n13=Number(data['13']||0),n22=Number(data['22']||0);
+    status.textContent='Ponte conectada ao Termux • 13: '+n13+' | 22: '+n22;
+    status.style.color='#4ff0a0';
+    if(bridgeReady){
+      for(let i=old13;i<n13;i++)command('13');
+      for(let i=old22;i<n22;i++)command('22');
+    } else {bridgeReady=true;}
+    old13=n13;old22=n22;
+  }catch(e){
+    status.textContent='Sem conexão com a ponte. Deixe python ponte.py rodando no Termux e tente novamente.';
+    status.style.color='#ff6971';
+  }
+}
+setInterval(pollBridge,1000);
+pollBridge();
 })();
 </script>
 </body></html>
