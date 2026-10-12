@@ -25,48 +25,48 @@ body { padding-top: 2px; padding-bottom: 2px; }
 .audio-toggle[aria-pressed="true"]{background:#087c48;border-color:#58ffac}
 .audio-hint{font:700 10px ui-monospace,monospace;color:#b9cbe0}
 
-/* ENQUADRAMENTO VERTICAL 9:16 PARA TIKTOK LIVE STUDIO */
-@media (min-width: 600px) and (min-height: 600px) {
-  html, body { min-height: 100%; }
-  body { padding: 0; overflow: hidden; }
-  .wrap {
-    width: min(100vw, 56.25dvh);
-    height: 100dvh;
-    min-height: 0;
-    margin: 0 auto;
-    padding: 5px 7px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+/* ENQUADRAMENTO VERTICAL 9:16 PARA TIKTOK LIVE STUDIO — janela desktop */
+@media (min-width: 600px) {
+  html, body { width:100%; height:100%; min-height:100%; }
+  body {
+    margin:0; padding:0; overflow:hidden;
+    display:flex; justify-content:center; align-items:stretch;
+    background:#020711;
   }
-  .flags { font-size: clamp(13px, 2.2dvh, 19px); line-height: 1; letter-spacing: 4px; }
-  .brand { font-size: clamp(17px, 2.7dvh, 25px); margin: 2px 0 1px; }
-  .subtitle { font-size: clamp(10px, 1.65dvh, 15px); margin: 2px 0 5px; }
-  .audio-control-wrap { margin: 2px auto 4px; gap: 5px; }
-  .audio-toggle { font-size: 10px; padding: 5px 9px; }
-  .audio-hint { font-size: 9px; }
-  .panel { padding: 7px; margin: 4px 0; border-radius: 8px; }
-  .topline { margin-bottom: 5px; gap: 5px; }
-  .race-status { font-size: clamp(10px, 1.6dvh, 14px); }
-  .timerbox { min-width: 90px; padding: 4px 7px; }
-  .timerlabel { font-size: 8px; }
-  .timer { font-size: clamp(22px, 4.5dvh, 32px); }
-  .progressbar { height: 9px; margin-bottom: 6px; }
-  .track { height: 34dvh; min-height: 220px; max-height: 330px; flex-shrink: 1; }
-  .runner img { max-height: 12dvh; max-width: 25vw; }
-  .runner-tag { font-size: clamp(8px, 1.2dvh, 11px); padding: 4px 5px; }
-  .score { gap: 6px; margin-top: 6px; }
-  .scorehead { font-size: clamp(9px, 1.35dvh, 13px); padding: 5px 2px; }
-  .score strong { font-size: clamp(25px, 4.8dvh, 36px); }
-  .score small { font-size: 8px; }
-  .laprow { gap: 5px; margin-top: 5px; }
-  .lap { padding: 4px 2px; font-size: 9px; }
-  .lap b { font-size: 11px; }
+  .wrap {
+    width:min(100vw, 56.25vh);
+    height:100vh; min-height:0; max-width:none;
+    margin:0; padding:5px 7px; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:flex-start;
+    flex-shrink:0;
+  }
+  .flags { font-size:clamp(12px, 2.0vh, 18px); line-height:1; letter-spacing:4px; }
+  .brand { font-size:clamp(16px, 2.65vh, 24px); margin:2px 0 1px; }
+  .subtitle { font-size:clamp(9px, 1.55vh, 14px); margin:2px 0 4px; }
+  .audio-control-wrap { margin:1px auto 3px; gap:5px; flex-shrink:0; }
+  .audio-toggle { width:30px; height:30px; font-size:15px; }
+  .audio-hint { font-size:8px; }
+  .panel { padding:6px; margin:3px 0; border-radius:7px; flex-shrink:0; }
+  .topline { margin-bottom:4px; gap:4px; }
+  .race-status { font-size:clamp(9px, 1.45vh, 13px); }
+  .timerbox { min-width:82px; padding:3px 6px; }
+  .timerlabel { font-size:7px; }
+  .timer { font-size:clamp(20px, 4.0vh, 29px); }
+  .progressbar { height:8px; margin-bottom:5px; }
+  .track { height:34vh; min-height:0; max-height:34vh; flex-shrink:1; }
+  .runner img { max-height:11vh; max-width:23vw; }
+  .runner-tag { font-size:clamp(7px, 1.05vh, 10px); padding:3px 4px; }
+  .score { gap:5px; margin-top:5px; }
+  .scorehead { font-size:clamp(8px, 1.2vh, 11px); padding:4px 2px; }
+  .score strong { font-size:clamp(23px, 4.1vh, 32px); }
+  .score small { font-size:7px; }
+  .laprow { gap:4px; margin-top:4px; }
+  .lap { padding:3px 2px; font-size:8px; }
+  .lap b { font-size:10px; }
 }
 @media (max-width: 599px) {
-  body { padding-top: 4px; }
-  .wrap { width: 100%; max-width: 560px; padding: 5px; }
+  body { padding-top:4px; }
+  .wrap { width:100%; max-width:560px; padding:5px; }
 }
 
 </style></head><body><main class="wrap"><div class="flags">🇧🇷 ⚡ 🇧🇷</div><div class="brand">LEÃO DA LIBERDADE</div><div class="subtitle">🏁 CORRIDA PRESIDENCIAL 🏁</div>
